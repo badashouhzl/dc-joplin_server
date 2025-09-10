@@ -14,6 +14,7 @@
 此容器依赖 postgresSQL 数据库
 
 ## 使用过的版本
+- 3.4.2
 - 2.14.1-beta
 - 2.13.5-beta
 
@@ -30,14 +31,22 @@
 	- POSTGRES_PASSWORD: postgres 密码
 	- 其它及详情参数文件中有注释
 - docker-compose.yaml: docker 容器编排文件，此文件不用修改
-- init.sh: 初始化运行环境文件，此文件不用修改
+- sql.sql: joplin 在 postgres 创建用户和库的脚本
+- joplin_server.nginx.conf: nginx 代理配置
 
 ## 部署容器
-时空目录后运行下面命令
+先到库中执行 sql.sql 脚本, 创建需要使用的用户和库，脚本内有说明执行步骤
+
+运行下面命令
 ```bash
-sh init.sh
-docker compose up -d
+chmod +x ctrl
+./ctrl init public # 或 ./ctrl init private   # 这个是只有容器内部风格 
 ```
 
+## 设置
+### 登入后台管理页面
+浏览器访问: http://external.net:50011
+默认管理用户: admin@localhost
+默认管理密码: admin
 
-
+然后修改管理员账号和密码

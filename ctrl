@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# 工作路径
+g_workPath=$(cd `dirname \$0`; pwd -P)
+cd $g_workPath
+
+. $g_workPath/script/func.sh
+. $g_workPath/.env
+
+help() {
+	cat << EOF
+用法: ./ctrl [选项]
+可用选项:
+    init            初始化容器部署文件(端口转发), 没有执行 private 之前
+    init private    初始化容器部署文件(nginx 代理)
+    init public     还原容器部署文件为(端口转发)
+EOF
+}
+
+case $1 in
+	init)
+		. ./script/init.sh "$2"
+		;;
+	help)
+		help
+		;;
+esac	

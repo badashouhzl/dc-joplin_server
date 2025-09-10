@@ -10,6 +10,7 @@ services:
       - /etc/localtime:/etc/localtime
     # command: ["sleep", "10m"]         # 调试问题打开用
     environment:
+      APP_SECRET:           # jwt 签名
       MAX_TIME_DRIFT: 0     # 这个设置为禁止 ntp 时间检验，在只有内网时一定要设置
       APP_PORT: 80          # 监听端口
       APP_BASE_URL:         # 外网访问地地址(如果有代理也要与外网的强一到)
@@ -21,7 +22,7 @@ services:
       POSTGRES_PASSWORD:    # postgres 密码
     networks:
       net-custom:
-        # ipv4_address:     # 指定 ip
+        # ipv4_address: 172.19.254.197    # 指定 ip
         aliases: 
           - net-joplin_server
 
