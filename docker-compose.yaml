@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD:    # postgres 密码
     networks:
       net-custom:
-        # ipv4_address: 172.19.254.197    # 指定 ip
+        ipv4_address: 172.19.254.197    # 指定 ip
         aliases: 
           - net-joplin_server
 

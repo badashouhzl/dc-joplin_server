@@ -17,9 +17,31 @@ help() {
 EOF
 }
 
+init() {
+	# 创建卷
+	echo "----- create volume ------"
+	mkVolume "vol-vaultwarden"
+	if [ "$1" == "private" ]
+	then 
+		setEnv "network" "net-private" $g_workPath/.env \
+		&& sed -i "s/^        # ipv4_address/        ipv4_address/" docker-compose.yaml \
+		&& sed -i "s/172.18.254.197/172.19.254.197/" docker-compose.yaml \
+		&& sed -i "s/172.18.254.197/172.19.254.197/" joplin_server.nginx.conf \
+		&& succEcho "convert private success"
+	elif [ "$1" == "public" ]
+	then
+		setEnv "network" "net-public" $g_workPath/.env \
+		&& sed -i "s/^        # ipv4_address/        ipv4_address/" docker-compose.yaml \
+		&& sed -i "s/172.19.254.197/172.18.254.197/" docker-compose.yaml \
+		&& sed -i "s/172.19.254.197/172.18.254.197/" joplin_server.nginx.conf \
+		&& succEcho "convert public success"
+	fi
+}
+
 case $1 in
 	init)
-		. ./script/init.sh "$2"
+		. ./script/init.sh
+		init "$2"
 		;;
 	help)
 		help
