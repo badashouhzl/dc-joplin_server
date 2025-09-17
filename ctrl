@@ -19,8 +19,6 @@ EOF
 
 init() {
 	# 创建卷
-	echo "----- create volume ------"
-	mkVolume "vol-vaultwarden"
 	if [ "$1" == "private" ]
 	then 
 		setEnv "network" "net-private" $g_workPath/.env \
